@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Order {
+public class Order { // Заказ
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column

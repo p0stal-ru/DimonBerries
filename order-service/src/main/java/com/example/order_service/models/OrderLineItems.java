@@ -15,7 +15,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderLineItems {
+public class OrderLineItems { // Позиции заказа
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
