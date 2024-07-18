@@ -6,27 +6,23 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
-@Entity
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Data
-@Table(name = "Product")
+@Document(value = "product")
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
-    private Long id;
+    private String id;
 
-    @Column
     private String name;
 
-    @Column
     private String description;
 
-    @Column
     private BigDecimal price;
 }
