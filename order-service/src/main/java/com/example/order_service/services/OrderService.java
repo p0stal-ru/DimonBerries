@@ -3,10 +3,12 @@ package com.example.order_service.services;
 import com.example.order_service.dto.InventoryResponse;
 import com.example.order_service.dto.OrderLineItemsDto;
 import com.example.order_service.dto.OrderRequest;
+import com.example.order_service.events.OrderPlacedEvent;
 import com.example.order_service.models.Order;
 import com.example.order_service.models.OrderLineItems;
 import com.example.order_service.repositories.OrderRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -23,6 +25,8 @@ public class OrderService {
     private final OrderRepository orderRepository;
 
     private final WebClient.Builder webClientBuilder;
+
+    private final KafkaTemplate<String, OrderPlacedEvent> kafkaTemplate;
 
     public String placeOrder(OrderRequest orderRequest) {
         Order order = new Order();
@@ -53,6 +57,7 @@ public class OrderService {
 
         if(allProductsInStock) {
             orderRepository.save(order);
+            kafkaTemplate.send("notificationTopic", new OrderPlacedEvent(order.getOrderNumber()));
             return "Order Placed Successfully";
         } else {
             throw new IllegalArgumentException("Продукта нет на скале, пожалуйста пропробуйте позже");
