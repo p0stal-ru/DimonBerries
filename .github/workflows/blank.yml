@@ -19,17 +19,17 @@ jobs:
           distribution: 'temurin'  # или 'adopt', если предпочитаете
           java-version: '21'
 
-      - name: Build Service 1
+      - name: Build Service order
         run: |
-          cd service1
-          mvn clean install
+          cd order-service
+          mvn clean install -DskipTests
 
-      - name: Build Service 2
+      - name: Build Service product
         run: |
-          cd service2
-          mvn clean install
+          cd product-service
+          mvn clean install -DskipTests
 
-      - name: Build Service 3
+      - name: Build Service inventory
         run: |
-          cd service3
-          mvn clean install
+          cd inventory-service
+          mvn clean install -DskipTests
